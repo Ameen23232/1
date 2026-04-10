@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>لوحة التحكم - Azure & Co.</title>
+  <title>لوحة التحكم - Admin Panel</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -13,76 +13,63 @@
       box-sizing: border-box;
     }
 
-    /* ======================== الوضع الفاتح (Light Mode) ======================== */
+    /* الوضع الفاتح - بدون مربعات زرقاء */
     :root {
-      --bg-primary: #f5f7fa;
+      --bg-primary: #f8fafc;
       --bg-secondary: #ffffff;
       --bg-card: #ffffff;
-      --text-primary: #1e293b;
-      --text-secondary: #475569;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
       --text-muted: #64748b;
       --border-light: #e2e8f0;
-      --border-hover: #cbd5e1;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --accent-light: #eff6ff;
-      --sidebar-bg: #1e293b;
-      --sidebar-text: #f1f5f9;
-      --toast-bg: #1e293b;
+      --accent: #0f172a;
+      --accent-hover: #1e293b;
+      --accent-light: #f1f5f9;
+      --sidebar-bg: #0f172a;
+      --sidebar-text: #f8fafc;
       --danger: #ef4444;
-      --danger-hover: #dc2626;
       --success: #10b981;
-      --warning: #f59e0b;
     }
 
-    /* ======================== الوضع الليلي (Dark Mode) ======================== */
+    /* الوضع الليلي */
     body.dark {
       --bg-primary: #0f172a;
       --bg-secondary: #1e293b;
       --bg-card: #1e293b;
-      --text-primary: #f1f5f9;
+      --text-primary: #f8fafc;
       --text-secondary: #cbd5e1;
       --text-muted: #94a3b8;
       --border-light: #334155;
-      --border-hover: #475569;
-      --accent: #60a5fa;
-      --accent-hover: #3b82f6;
-      --accent-light: #1e293b;
-      --sidebar-bg: #0f172a;
-      --sidebar-text: #f1f5f9;
-      --toast-bg: #1e293b;
+      --accent: #f8fafc;
+      --accent-hover: #e2e8f0;
+      --accent-light: #334155;
+      --sidebar-bg: #020617;
     }
 
     body {
       font-family: 'Cairo', sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
-      transition: all 0.3s ease;
+      transition: all 0.3s;
     }
 
-    /* ======================== زر تبديل الوضع ======================== */
-    .theme-toggle-btn {
+    /* زر تبديل الوضع */
+    .theme-btn {
       position: fixed;
       top: 1rem;
       left: 1rem;
       z-index: 1000;
       background: var(--bg-secondary);
       border: 1px solid var(--border-light);
-      border-radius: 60px;
-      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
       font-weight: 600;
       color: var(--text-primary);
-      transition: all 0.2s;
       font-size: 0.8rem;
     }
 
-    /* ======================== زر القائمة للهواتف ======================== */
+    /* زر القائمة للهواتف */
     .mobile-menu-btn {
       display: none;
       position: fixed;
@@ -91,25 +78,24 @@
       z-index: 1000;
       background: var(--accent);
       border: none;
-      border-radius: 12px;
-      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
       color: white;
-      font-size: 1rem;
       cursor: pointer;
     }
 
-    /* ======================== تنسيق الـ Dashboard ======================== */
+    /* التخطيط */
     .dashboard {
       display: flex;
       min-height: 100vh;
     }
 
-    /* Sidebar */
+    /* القائمة الجانبية */
     .sidebar {
       width: 250px;
       background: var(--sidebar-bg);
       color: var(--sidebar-text);
-      padding: 1.8rem 1rem;
+      padding: 1.5rem 1rem;
       position: sticky;
       top: 0;
       height: 100vh;
@@ -120,23 +106,18 @@
       font-size: 1.2rem;
       margin-bottom: 1.5rem;
       padding-bottom: 0.8rem;
-      border-bottom: 2px solid rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .nav-item {
-      padding: 0.7rem 1rem;
+      padding: 0.6rem 1rem;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 500;
       margin-bottom: 0.3rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .nav-item:hover, .nav-item.active {
@@ -152,20 +133,16 @@
     /* البطاقات */
     .card {
       background: var(--bg-card);
-      border-radius: 20px;
-      padding: 1.3rem;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow-sm);
+      border-radius: 16px;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
       border: 1px solid var(--border-light);
     }
 
     .card h2 {
-      color: var(--accent);
+      font-size: 1.1rem;
       margin-bottom: 1rem;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      color: var(--accent);
     }
 
     /* النماذج */
@@ -177,19 +154,18 @@
       display: block;
       font-weight: 600;
       margin-bottom: 0.3rem;
-      color: var(--text-secondary);
       font-size: 0.8rem;
+      color: var(--text-secondary);
     }
 
     .form-group input, .form-group select {
       width: 100%;
-      padding: 0.6rem 0.8rem;
+      padding: 0.5rem 0.8rem;
       border: 1px solid var(--border-light);
-      border-radius: 12px;
+      border-radius: 10px;
       background: var(--bg-secondary);
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 0.85rem;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -197,71 +173,55 @@
       border-color: var(--accent);
     }
 
-    /* زر رفع الصورة */
-    .image-upload-area {
+    /* رفع الصورة */
+    .upload-area {
       border: 2px dashed var(--border-light);
-      border-radius: 16px;
-      padding: 1rem;
+      border-radius: 12px;
+      padding: 0.8rem;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
       background: var(--bg-primary);
     }
 
-    .image-upload-area:hover {
+    .upload-area:hover {
       border-color: var(--accent);
-      background: var(--accent-light);
     }
 
     .image-preview {
-      margin-top: 0.8rem;
+      margin-top: 0.5rem;
       display: flex;
       gap: 0.5rem;
-      flex-wrap: wrap;
     }
 
     .preview-img {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       object-fit: cover;
-      border-radius: 12px;
-      border: 1px solid var(--border-light);
+      border-radius: 10px;
     }
 
-    /* مجموعة الأزرار */
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 0.8rem;
-    }
-
+    /* الأزرار */
     button {
       background: var(--accent);
-      color: white;
+      color: var(--sidebar-text);
       border: none;
-      padding: 0.5rem 1.2rem;
+      padding: 0.4rem 1rem;
       border-radius: 40px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      font-size: 0.8rem;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.8rem;
     }
 
     button:hover {
       background: var(--accent-hover);
-      transform: translateY(-1px);
     }
 
     .btn-danger {
       background: var(--danger);
-    }
-
-    .btn-danger:hover {
-      background: var(--danger-hover);
+      color: white;
     }
 
     .btn-secondary {
@@ -269,36 +229,30 @@
       color: var(--text-primary);
     }
 
-    /* الجداول */
+    /* الجدول */
     table {
       width: 100%;
       border-collapse: collapse;
     }
 
     th, td {
-      padding: 0.6rem;
+      padding: 0.5rem;
       text-align: right;
       border-bottom: 1px solid var(--border-light);
-      font-size: 0.85rem;
-    }
-
-    th {
-      color: var(--text-muted);
-      font-size: 0.7rem;
+      font-size: 0.8rem;
     }
 
     .badge {
       background: var(--accent-light);
-      color: var(--accent);
-      padding: 0.15rem 0.4rem;
-      border-radius: 12px;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
       font-size: 0.7rem;
     }
 
     /* الإحصائيات */
-    .stats-grid {
+    .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -312,24 +266,18 @@
     }
 
     .stat-card .number {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 800;
-      color: var(--accent);
     }
 
-    .stat-card h3 {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    /* الإشعارات */
+    /* التنبيه */
     .toast {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: var(--toast-bg);
+      background: #1e293b;
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border-radius: 40px;
       z-index: 1000;
       opacity: 0;
@@ -339,28 +287,19 @@
 
     .toast.show { opacity: 1; }
 
-    /* ======================== Responsive ======================== */
+    /* استجابة للهواتف */
     @media (max-width: 768px) {
-      .mobile-menu-btn {
-        display: block;
-      }
-
+      .mobile-menu-btn { display: block; }
       .sidebar {
         position: fixed;
         top: 0;
         right: 0;
         transform: translateX(100%);
-        width: 250px;
-        height: 100vh;
         z-index: 200;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s;
       }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .sidebar-overlay {
+      .sidebar.open { transform: translateX(0); }
+      .overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -370,57 +309,29 @@
         z-index: 199;
         display: none;
       }
-
-      .sidebar-overlay.active {
-        display: block;
-      }
-
-      .main-content {
-        padding: 1rem;
-        padding-top: 4rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.6rem;
-      }
-
-      .button-group {
-        flex-direction: column;
-      }
-
-      .button-group button {
-        width: 100%;
-        justify-content: center;
-      }
+      .overlay.active { display: block; }
+      .main-content { padding: 1rem; padding-top: 4rem; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
     }
 
     @media (min-width: 769px) {
-      .sidebar {
-        transform: translateX(0) !important;
-      }
+      .sidebar { transform: translateX(0) !important; }
     }
   </style>
 </head>
 <body>
 
 <!-- زر تبديل الوضع -->
-<button class="theme-toggle-btn" id="themeToggle">
-  <i class="fas fa-moon"></i> <span id="themeText">الوضع الليلي</span>
-</button>
+<button class="theme-btn" id="themeBtn"><i class="fas fa-moon"></i> <span id="themeText">ليلي</span></button>
 
 <!-- زر القائمة للهواتف -->
-<button class="mobile-menu-btn" id="mobileMenuBtn">
-  <i class="fas fa-bars"></i>
-</button>
-
-<!-- خلفية مظللة -->
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+<div class="overlay" id="overlay"></div>
 
 <div class="dashboard">
-  <!-- Sidebar -->
+  <!-- القائمة الجانبية -->
   <div class="sidebar" id="sidebar">
-    <h2><i class="fas fa-crown"></i> Azure Admin</h2>
+    <h2><i class="fas fa-crown"></i> Admin Panel</h2>
     <nav>
       <div class="nav-item active" data-tab="dashboard"><i class="fas fa-chart-line"></i> الرئيسية</div>
       <div class="nav-item" data-tab="products"><i class="fas fa-box"></i> المنتجات</div>
@@ -429,55 +340,49 @@
     </nav>
   </div>
 
-  <!-- Main Content -->
+  <!-- المحتوى -->
   <div class="main-content">
-    <!-- Dashboard Tab -->
-    <div id="dashboardTab" class="tab-content">
-      <div class="stats-grid">
+    <!-- تبويب الرئيسية -->
+    <div id="dashboardTab">
+      <div class="stats">
         <div class="stat-card"><h3>المنتجات</h3><div class="number" id="totalProducts">0</div></div>
         <div class="stat-card"><h3>الأقسام</h3><div class="number" id="totalCategories">0</div></div>
         <div class="stat-card"><h3>الصور</h3><div class="number" id="totalImages">0</div></div>
       </div>
       <div class="card">
-        <h2><i class="fas fa-info-circle"></i> مرحباً في لوحة التحكم</h2>
-        <p style="font-size:0.85rem">يمكنك إدارة المنتجات والأقسام والصور من هنا. جميع التغييرات تظهر فوراً في المتجر.</p>
+        <h2><i class="fas fa-info-circle"></i> مرحباً</h2>
+        <p style="font-size:0.85rem">قم بإدارة المنتجات والأقسام من هنا. جميع التغييرات تظهر فوراً في المتجر.</p>
       </div>
     </div>
 
-    <!-- Products Tab -->
-    <div id="productsTab" class="tab-content" style="display:none">
+    <!-- تبويب المنتجات -->
+    <div id="productsTab" style="display:none">
       <div class="card">
-        <h2><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h2>
-        <div class="form-group"><label>اسم المنتج</label><input type="text" id="prodName" placeholder="مثال: جاكيت جلد"></div>
-        <div class="form-group"><label>القسم</label><select id="prodCategory"></select></div>
-        <div class="form-group"><label>ترتيب العرض</label><input type="number" id="prodOrder" placeholder="10"></div>
-        
-        <!-- رفع الصورة من المعرض -->
+        <h2><i class="fas fa-plus-circle"></i> إضافة منتج</h2>
+        <div class="form-group"><label>اسم المنتج</label><input type="text" id="productName" placeholder="مثال: جاكيت جلد"></div>
+        <div class="form-group"><label>القسم</label><select id="productCategory"></select></div>
+        <div class="form-group"><label>ترتيب العرض</label><input type="number" id="productOrder" placeholder="10"></div>
         <div class="form-group">
           <label>صورة المنتج</label>
-          <div class="image-upload-area" id="imageUploadArea">
-            <i class="fas fa-cloud-upload-alt"></i> اضغط لرفع صورة من جهازك
-            <input type="file" id="imageFile" accept="image/*" style="display:none">
-          </div>
+          <div class="upload-area" id="uploadArea"><i class="fas fa-cloud-upload-alt"></i> اضغط لرفع صورة</div>
+          <input type="file" id="imageInput" accept="image/*" style="display:none">
           <div class="image-preview" id="imagePreview"></div>
-          <input type="hidden" id="prodImage" value="👕">
+          <input type="hidden" id="productImage" value="👕">
         </div>
-        
-        <button id="addProductBtn"><i class="fas fa-save"></i> إضافة منتج</button>
+        <button id="addProductBtn"><i class="fas fa-save"></i> إضافة</button>
       </div>
-      
       <div class="card">
-        <h2><i class="fas fa-list"></i> جميع المنتجات</h2>
-        <div style="overflow-x:auto"><table><thead><tr><th>الصورة</th><th>المنتج</th><th>القسم</th><th>الترتيب</th><th></th></tr></thead><tbody id="productsList"></tbody></table></div>
+        <h2><i class="fas fa-list"></i> قائمة المنتجات</h2>
+        <div style="overflow-x:auto"><table><thead><tr><th>الصورة</th><th>الاسم</th><th>القسم</th><th>الترتيب</th><th></th></tr></thead><tbody id="productsList"></tbody></table></div>
       </div>
     </div>
 
-    <!-- Categories Tab -->
-    <div id="categoriesTab" class="tab-content" style="display:none">
+    <!-- تبويب الأقسام -->
+    <div id="categoriesTab" style="display:none">
       <div class="card">
-        <h2><i class="fas fa-plus-circle"></i> إضافة قسم جديد</h2>
-        <div class="form-group"><label>اسم القسم</label><input type="text" id="catName" placeholder="مثال: شتوي"></div>
-        <button id="addCategoryBtn">إضافة قسم</button>
+        <h2><i class="fas fa-plus-circle"></i> إضافة قسم</h2>
+        <div class="form-group"><label>اسم القسم</label><input type="text" id="categoryName" placeholder="مثال: شتوي"></div>
+        <button id="addCategoryBtn">إضافة</button>
       </div>
       <div class="card">
         <h2><i class="fas fa-tags"></i> الأقسام الحالية</h2>
@@ -485,31 +390,32 @@
       </div>
     </div>
 
-    <!-- Settings Tab -->
-    <div id="settingsTab" class="tab-content" style="display:none">
+    <!-- تبويب الإعدادات -->
+    <div id="settingsTab" style="display:none">
       <div class="card">
         <h2><i class="fas fa-palette"></i> إعدادات الموقع</h2>
-        <div class="form-group"><label>اسم الموقع</label><input type="text" id="siteName" placeholder="Azure & CO."></div>
-        <div class="button-group"><button id="saveSettingsBtn" class="btn-success">حفظ الإعدادات</button></div>
+        <div class="form-group"><label>اسم الموقع</label><input type="text" id="siteNameInput" placeholder="Azure Store"></div>
+        <button id="saveSettingsBtn">حفظ</button>
       </div>
       <div class="card">
         <h2><i class="fas fa-database"></i> إدارة البيانات</h2>
-        <div class="button-group">
-          <button id="exportDataBtn" class="btn-secondary">تصدير البيانات</button>
-          <button id="clearProductsBtn" class="btn-danger">حذف جميع المنتجات</button>
+        <div style="display:flex; gap:0.8rem; flex-wrap:wrap">
+          <button id="exportBtn" class="btn-secondary">تصدير</button>
+          <button id="clearAllBtn" class="btn-danger">حذف الكل</button>
         </div>
-        <p style="margin-top:0.8rem; font-size:0.7rem; color:var(--text-muted)"><i class="fas fa-exclamation-triangle"></i> تنبيه: حذف جميع المنتجات لا يمكن التراجع عنه</p>
       </div>
     </div>
   </div>
 </div>
 
-<div id="toast" class="toast">✨ تم</div>
+<div id="toastMsg" class="toast">✨ تم</div>
 
 <script type="module">
+  // استيراد Firebase
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
   import { getDatabase, ref, set, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
   
+  // إعدادات Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDDVYttBm00kFOHTz8Ba5FQSU2I70qIky8",
     authDomain: "yassen-web.firebaseapp.com",
@@ -523,15 +429,274 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   
+  // المتغيرات العامة
   let products = [];
   let categories = [];
-  let selectedImageData = null;
+  let selectedImage = null;
+  
+  // ======================== دالة عرض التنبيه ========================
+  function showToast(msg) {
+    const toast = document.getElementById('toastMsg');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+  
+  // ======================== رفع الصورة ========================
+  const uploadArea = document.getElementById('uploadArea');
+  const imageInput = document.getElementById('imageInput');
+  const imagePreview = document.getElementById('imagePreview');
+  const productImage = document.getElementById('productImage');
+  
+  uploadArea.addEventListener('click', () => imageInput.click());
+  
+  imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        selectedImage = event.target.result;
+        imagePreview.innerHTML = `<img src="${selectedImage}" class="preview-img">`;
+        productImage.value = selectedImage;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+  
+  // ======================== تحميل البيانات من Firebase ========================
+  function loadData() {
+    // تحميل المنتجات
+    const productsRef = ref(db, 'products');
+    onValue(productsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        products = Object.entries(data).map(([id, val]) => ({ ...val, firebaseId: id }));
+      } else {
+        products = [];
+      }
+      updateProductsList();
+      updateStats();
+    });
+    
+    // تحميل الأقسام
+    const categoriesRef = ref(db, 'categories');
+    onValue(categoriesRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        categories = Object.entries(data).map(([id, val]) => ({ ...val, firebaseId: id }));
+      } else {
+        categories = [
+          { id: "cat1", name: "تي شيرت" },
+          { id: "cat2", name: "قمصان" },
+          { id: "cat3", name: "بناطيل" }
+        ];
+      }
+      updateCategorySelect();
+      updateCategoriesList();
+      updateStats();
+    });
+    
+    // تحميل إعدادات الموقع
+    const settingsRef = ref(db, 'settings');
+    onValue(settingsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data && data.siteName) {
+        document.getElementById('siteNameInput').value = data.siteName;
+      }
+    });
+  }
+  
+  // ======================== عرض المنتجات في الجدول ========================
+  function updateProductsList() {
+    const tbody = document.getElementById('productsList');
+    if (!tbody) return;
+    
+    tbody.innerHTML = products.map(p => {
+      const cat = categories.find(c => c.id === p.categoryId);
+      return `
+        <tr>
+          <td>${p.image && p.image.startsWith('data:') ? `<img src="${p.image}" style="width:35px;height:35px;object-fit:cover;border-radius:8px">` : `<span style="font-size:1.2rem">${p.image || '👕'}</span>`}</td>
+          <td><strong>${p.name}</strong></td>
+          <td><span class="badge">${cat ? cat.name : '?'}</span></td>
+          <td>${p.displayOrder || 'auto'}</td>
+          <td><button class="deleteProductBtn" data-id="${p.firebaseId}" style="background:#ef4444; padding:0.2rem 0.6rem; border:none; border-radius:20px; color:white; cursor:pointer">حذف</button></td>
+        </tr>
+      `;
+    }).join('');
+    
+    // ربط أزرار الحذف
+    document.querySelectorAll('.deleteProductBtn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+          await remove(ref(db, `products/${id}`));
+          showToast('✅ تم حذف المنتج');
+        }
+      });
+    });
+  }
+  
+  // ======================== عرض الأقسام ========================
+  function updateCategoriesList() {
+    const container = document.getElementById('categoriesList');
+    if (!container) return;
+    
+    container.innerHTML = categories.map(c => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem; border-bottom:1px solid var(--border-light)">
+        <span><i class="fas fa-tag"></i> ${c.name}</span>
+        <button class="deleteCategoryBtn" data-id="${c.firebaseId}" style="background:#ef4444; padding:0.2rem 0.6rem; border:none; border-radius:20px; color:white; cursor:pointer">حذف</button>
+      </div>
+    `).join('');
+    
+    document.querySelectorAll('.deleteCategoryBtn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        const catToDelete = categories.find(c => c.firebaseId === id);
+        if (products.some(p => p.categoryId === catToDelete?.id)) {
+          showToast('⚠️ لا يمكن حذف القسم لأنه يحتوي على منتجات');
+          return;
+        }
+        if (confirm('هل أنت متأكد من حذف هذا القسم؟')) {
+          await remove(ref(db, `categories/${id}`));
+          showToast('✅ تم حذف القسم');
+        }
+      });
+    });
+  }
+  
+  // ======================== تحديث قائمة الأقسام في الفورم ========================
+  function updateCategorySelect() {
+    const select = document.getElementById('productCategory');
+    if (select) {
+      select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    }
+  }
+  
+  // ======================== تحديث الإحصائيات ========================
+  function updateStats() {
+    document.getElementById('totalProducts').innerText = products.length;
+    document.getElementById('totalCategories').innerText = categories.length;
+    document.getElementById('totalImages').innerText = products.filter(p => p.image && p.image.startsWith('data:')).length;
+  }
+  
+  // ======================== إضافة منتج ========================
+  async function addProduct() {
+    const name = document.getElementById('productName').value.trim();
+    const categoryId = document.getElementById('productCategory').value;
+    const order = parseInt(document.getElementById('productOrder').value) || 999;
+    const image = productImage.value;
+    
+    if (!name) {
+      showToast('⚠️ الرجاء إدخال اسم المنتج');
+      return;
+    }
+    
+    const newProduct = {
+      name: name,
+      categoryId: categoryId,
+      displayOrder: order,
+      image: image,
+      createdAt: Date.now()
+    };
+    
+    await push(ref(db, 'products'), newProduct);
+    
+    // تفريغ الحقول
+    document.getElementById('productName').value = '';
+    document.getElementById('productOrder').value = '';
+    productImage.value = '👕';
+    imagePreview.innerHTML = '';
+    selectedImage = null;
+    
+    showToast('✅ تم إضافة المنتج بنجاح');
+  }
+  
+  // ======================== إضافة قسم ========================
+  async function addCategory() {
+    const name = document.getElementById('categoryName').value.trim();
+    if (!name) {
+      showToast('⚠️ الرجاء إدخال اسم القسم');
+      return;
+    }
+    
+    if (categories.some(c => c.name === name)) {
+      showToast('⚠️ هذا القسم موجود مسبقاً');
+      return;
+    }
+    
+    const newCategory = { id: 'cat_' + Date.now(), name: name };
+    await push(ref(db, 'categories'), newCategory);
+    
+    document.getElementById('categoryName').value = '';
+    showToast('✅ تم إضافة القسم بنجاح');
+  }
+  
+  // ======================== حفظ إعدادات الموقع ========================
+  async function saveSettings() {
+    const siteName = document.getElementById('siteNameInput').value;
+    await set(ref(db, 'settings'), { siteName: siteName, updatedAt: Date.now() });
+    showToast('✅ تم حفظ الإعدادات');
+  }
+  
+  // ======================== تصدير البيانات ========================
+  function exportData() {
+    const data = { products: products, categories: categories, exportDate: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'backup_data.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('✅ تم تصدير البيانات');
+  }
+  
+  // ======================== حذف جميع المنتجات ========================
+  async function clearAllProducts() {
+    if (confirm('⚠️ هل أنت متأكد من حذف جميع المنتجات؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+      for (const p of products) {
+        await remove(ref(db, `products/${p.firebaseId}`));
+      }
+      showToast('✅ تم حذف جميع المنتجات');
+    }
+  }
+  
+  // ======================== التنقل بين التبويبات ========================
+  function switchTab(tabId) {
+    document.getElementById('dashboardTab').style.display = 'none';
+    document.getElementById('productsTab').style.display = 'none';
+    document.getElementById('categoriesTab').style.display = 'none';
+    document.getElementById('settingsTab').style.display = 'none';
+    document.getElementById(tabId + 'Tab').style.display = 'block';
+    
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    document.querySelector(`.nav-item[data-tab="${tabId}"]`).classList.add('active');
+  }
+  
+  // ربط أحداث التبويبات
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const tab = item.getAttribute('data-tab');
+      switchTab(tab);
+      if (window.innerWidth <= 768) closeMenu();
+    });
+  });
+  
+  // ======================== القائمة للهواتف ========================
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebarEl = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  
+  function openMenu() { sidebarEl.classList.add('open'); overlay.classList.add('active'); }
+  function closeMenu() { sidebarEl.classList.remove('open'); overlay.classList.remove('active'); }
+  
+  menuBtn.addEventListener('click', openMenu);
+  overlay.addEventListener('click', closeMenu);
   
   // ======================== الوضع الليلي ========================
-  let darkMode = localStorage.getItem('darkMode') === 'true';
-  
+  let isDark = localStorage.getItem('darkMode') === 'true';
   function applyTheme() {
-    if (darkMode) {
+    if (isDark) {
       document.body.classList.add('dark');
       document.getElementById('themeText').innerHTML = '🌞 نهاري';
     } else {
@@ -540,230 +705,21 @@
     }
   }
   
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    darkMode = !darkMode;
-    localStorage.setItem('darkMode', darkMode);
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    isDark = !isDark;
+    localStorage.setItem('darkMode', isDark);
     applyTheme();
   });
   applyTheme();
   
-  // ======================== رفع الصورة ========================
-  const imageUploadArea = document.getElementById('imageUploadArea');
-  const imageFile = document.getElementById('imageFile');
-  const imagePreview = document.getElementById('imagePreview');
-  const prodImageHidden = document.getElementById('prodImage');
+  // ======================== ربط الأزرار ========================
+  document.getElementById('addProductBtn').addEventListener('click', addProduct);
+  document.getElementById('addCategoryBtn').addEventListener('click', addCategory);
+  document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+  document.getElementById('exportBtn').addEventListener('click', exportData);
+  document.getElementById('clearAllBtn').addEventListener('click', clearAllProducts);
   
-  imageUploadArea.addEventListener('click', () => {
-    imageFile.click();
-  });
-  
-  imageFile.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        selectedImageData = event.target.result;
-        imagePreview.innerHTML = `<img src="${selectedImageData}" class="preview-img">`;
-        prodImageHidden.value = selectedImageData;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      showToast('الرجاء اختيار ملف صورة صالح');
-    }
-  });
-  
-  // ======================== القائمة للهواتف ========================
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const sidebar = document.getElementById('sidebar');
-  const sidebarOverlay = document.getElementById('sidebarOverlay');
-  
-  function openMobileMenu() { sidebar.classList.add('open'); sidebarOverlay.classList.add('active'); }
-  function closeMobileMenu() { sidebar.classList.remove('open'); sidebarOverlay.classList.remove('active'); }
-  
-  mobileMenuBtn.addEventListener('click', openMobileMenu);
-  sidebarOverlay.addEventListener('click', closeMobileMenu);
-  window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
-  
-  // ======================== تحميل البيانات ========================
-  function loadData() {
-    const productsRef = ref(db, 'products');
-    onValue(productsRef, (snapshot) => {
-      const data = snapshot.val();
-      products = data ? Object.entries(data).map(([id, val]) => ({ ...val, firebaseId: id })) : [];
-      updateUI();
-      updateStats();
-    });
-    
-    const categoriesRef = ref(db, 'categories');
-    onValue(categoriesRef, (snapshot) => {
-      const data = snapshot.val();
-      categories = data ? Object.entries(data).map(([id, val]) => ({ ...val, firebaseId: id })) : [];
-      if (categories.length === 0) {
-        categories = [{ id: "cat1", name: "تي شيرت" }, { id: "cat2", name: "قمصان" }];
-      }
-      updateCategorySelect();
-      displayCategories();
-      updateUI();
-      updateStats();
-    });
-    
-    const settingsRef = ref(db, 'settings');
-    onValue(settingsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data && data.siteName) document.getElementById('siteName').value = data.siteName;
-    });
-  }
-  
-  function updateUI() {
-    const tbody = document.getElementById('productsList');
-    tbody.innerHTML = products.map(p => `
-      <tr>
-        <td data-label="الصورة">${p.image && p.image.startsWith('data:') ? `<img src="${p.image}" style="width:35px;height:35px;object-fit:cover;border-radius:8px">` : `<span style="font-size:1.3rem">${p.image || '👕'}</span>`}</td>
-        <td data-label="المنتج"><strong>${p.name}</strong></td>
-        <td data-label="القسم"><span class="badge">${categories.find(c => c.id === p.categoryId)?.name || '?'}</span></td>
-        <td data-label="الترتيب">${p.displayOrder || 'auto'}</td>
-        <td data-label="إجراء"><button class="delete-product" data-id="${p.firebaseId}" style="background:#ef4444; padding:0.2rem 0.6rem; font-size:0.7rem; border:none; border-radius:20px; color:white; cursor:pointer"><i class="fas fa-trash"></i> حذف</button></td>
-      </tr>
-    `).join('');
-    
-    document.querySelectorAll('.delete-product').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const id = btn.getAttribute('data-id');
-        if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
-          await remove(ref(db, `products/${id}`));
-          showToast('تم حذف المنتج');
-        }
-      });
-    });
-  }
-  
-  function updateCategorySelect() {
-    const select = document.getElementById('prodCategory');
-    if (select) select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-  }
-  
-  function displayCategories() {
-    const container = document.getElementById('categoriesList');
-    if (container) {
-      container.innerHTML = categories.map(c => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem; border-bottom:1px solid var(--border-light)">
-          <span><i class="fas fa-tag"></i> ${c.name}</span>
-          <button class="delete-category" data-id="${c.firebaseId}" style="background:#ef4444; padding:0.2rem 0.6rem; font-size:0.7rem; border:none; border-radius:20px; color:white; cursor:pointer">حذف</button>
-        </div>
-      `).join('');
-      
-      document.querySelectorAll('.delete-category').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const id = btn.getAttribute('data-id');
-          if (products.some(p => p.categoryId === categories.find(c => c.firebaseId === id)?.id)) {
-            showToast('لا يمكن حذف القسم لأنه يحتوي على منتجات');
-            return;
-          }
-          if (confirm('هل أنت متأكد من حذف هذا القسم؟')) {
-            await remove(ref(db, `categories/${id}`));
-            showToast('تم حذف القسم');
-          }
-        });
-      });
-    }
-  }
-  
-  function updateStats() {
-    document.getElementById('totalProducts').innerText = products.length;
-    document.getElementById('totalCategories').innerText = categories.length;
-    document.getElementById('totalImages').innerText = products.filter(p => p.image && p.image.startsWith('data:')).length;
-  }
-  
-  async function addProduct() {
-    const name = document.getElementById('prodName').value.trim();
-    const categoryId = document.getElementById('prodCategory').value;
-    const order = parseInt(document.getElementById('prodOrder').value) || 999;
-    const image = prodImageHidden.value || '👕';
-    
-    if (!name) { showToast('أدخل اسم المنتج'); return; }
-    
-    const newProduct = { name, categoryId, displayOrder: order, image, createdAt: Date.now() };
-    await push(ref(db, 'products'), newProduct);
-    
-    document.getElementById('prodName').value = '';
-    document.getElementById('prodOrder').value = '';
-    prodImageHidden.value = '👕';
-    imagePreview.innerHTML = '';
-    selectedImageData = null;
-    showToast('✅ تم إضافة المنتج');
-  }
-  
-  async function addCategory() {
-    const name = document.getElementById('catName').value.trim();
-    if (!name) { showToast('أدخل اسم القسم'); return; }
-    if (categories.some(c => c.name === name)) { showToast('القسم موجود مسبقاً'); return; }
-    await push(ref(db, 'categories'), { id: 'cat_' + Date.now(), name });
-    document.getElementById('catName').value = '';
-    showToast('✅ تم إضافة القسم');
-  }
-  
-  async function saveSettings() {
-    const siteName = document.getElementById('siteName').value;
-    await set(ref(db, 'settings'), { siteName, updatedAt: Date.now() });
-    showToast('✅ تم حفظ الإعدادات');
-  }
-  
-  async function clearAllProducts() {
-    if (confirm('⚠️ هل أنت متأكد من حذف جميع المنتجات؟')) {
-      for (const p of products) await remove(ref(db, `products/${p.firebaseId}`));
-      showToast('✅ تم حذف جميع المنتجات');
-    }
-  }
-  
-  function exportData() {
-    const data = { products, categories, exportDate: new Date().toISOString() };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'azure_backup.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('✅ تم تصدير البيانات');
-  }
-  
-  function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2000);
-  }
-  
-  // التنقل بين التبويبات
-  const tabs = ['dashboard', 'products', 'categories', 'settings'];
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const tab = item.getAttribute('data-tab');
-      tabs.forEach(t => { const el = document.getElementById(t + 'Tab'); if (el) el.style.display = 'none'; });
-      const activeTab = document.getElementById(tab + 'Tab');
-      if (activeTab) activeTab.style.display = 'block';
-      document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-      item.classList.add('active');
-      if (window.innerWidth <= 768) closeMobileMenu();
-    });
-  });
-  
-  // ربط الأزرار
-  const addBtn = document.getElementById('addProductBtn');
-  if (addBtn) addBtn.addEventListener('click', addProduct);
-  
-  const addCatBtn = document.getElementById('addCategoryBtn');
-  if (addCatBtn) addCatBtn.addEventListener('click', addCategory);
-  
-  const saveBtn = document.getElementById('saveSettingsBtn');
-  if (saveBtn) saveBtn.addEventListener('click', saveSettings);
-  
-  const exportBtn = document.getElementById('exportDataBtn');
-  if (exportBtn) exportBtn.addEventListener('click', exportData);
-  
-  const clearBtn = document.getElementById('clearProductsBtn');
-  if (clearBtn) clearBtn.addEventListener('click', clearAllProducts);
-  
+  // ======================== تشغيل التطبيق ========================
   loadData();
   showToast('✅ لوحة التحكم جاهزة');
 </script>
