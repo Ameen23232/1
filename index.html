@@ -840,6 +840,45 @@
 
         setTimeout(() => { trackVisit(); handleReferral(); }, 500);
         updateThemeImages(0);
+        // طلب إذن الإشعارات عند أول زيارة
+function requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'denied') {
+        alert('الرجاء تفعيل الإشعارات من إعدادات المتصفح ليصلك ردنا');
+    } else if ('Notification' in window && Notification.permission !== 'granted') {
+        Notification.requestPermission();
+    }
+}
+
+// استدعاء عند فتح الشات
+function openChat() {
+    // ... الكود الموجود ...
+    requestNotificationPermission();
+}
+
+// إضافة listener للإشعارات عند وصول رد من الإدارة
+function listenForAdminReplies() {
+    if (db && chatSessionId) {
+        db.ref('chats/' + chatSessionId + '/messages').on('child_added', function(snap) {
+            var msg = snap.val();
+            if ((msg.isAdmin || msg.sender === 'admin') && document.getElementById('chatOverlay').style.display !== 'flex') {
+                // إظهار إشعار للمستخدم
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('📩 Tènvora Group', {
+                        body: msg.text.substring(0, 100),
+                        icon: 'https://cdn-icons-png.flaticon.com/512/2099/2099199.png',
+                        tag: 'chat-reply'
+                    });
+                }
+                // صوت تنبيه
+                try { var audio = new Audio('https://www.soundjay.com/buttons/button-10.mp3'); audio.volume = 0.3; audio.play(); } catch(e) {}
+            }
+        });
+    }
+}
+
+// تشغيل المستمع
+setTimeout(function() { listenForAdminReplies(); }, 1000);
     </script>
+
 </body>
 </html>
