@@ -369,7 +369,6 @@
             transition: 0.6s;
         }
 
-        /* ✅ زرين جنب بعض */
         .btn-row {
             display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 60px;
         }
@@ -443,7 +442,7 @@
             color: var(--primary);
         }
 
-        /* ✅ تنسيقات الشات */
+        /* تنسيقات الشات */
         .chat-overlay {
             position: fixed; inset: 0; z-index: 2500;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(30px);
@@ -602,7 +601,6 @@
             <p class="reveal" style="font-size: 32px; color: var(--primary); font-weight: 900;">TÈNVORA: نكتب المستقبل اليوم.</p>
             <p class="reveal">تواصل معنا اليوم؛ لنصنع معاً هويتك الرقمية.</p>
 
-            <!-- ✅ زرين جنب بعض -->
             <div class="btn-row reveal">
                 <button class="btn-neon" onclick="toggleModal(true)">📂 اعمالنا</button>
                 <button class="btn-neon chat-btn" onclick="openChat()">💬 تحدث معنا</button>
@@ -618,7 +616,6 @@
         </section>
     </main>
 
-    <!-- مودال اعمالنا -->
     <div class="modal" id="modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(30px); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 20px;">
         <div class="modal-box">
             <h2 style="color: var(--primary); font-size: 28px; margin-bottom: 20px;">معرض الفخر الرقمي</h2>
@@ -627,7 +624,6 @@
         </div>
     </div>
 
-    <!-- ✅ شات العملاء -->
     <div class="chat-overlay" id="chatOverlay">
         <div class="chat-panel">
             <div class="chat-header">
@@ -675,6 +671,35 @@
 
         if (!chatSessionId) { chatSessionId = 'chat_' + Date.now() + '_' + Math.random().toString(36).substr(2,9); localStorage.setItem('chatSessionId', chatSessionId); }
 
+        // 🆕 طلب إذن الإشعارات
+        function requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'denied') {
+                // تم الرفض سابقاً
+            } else if ('Notification' in window && Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        }
+
+        // 🆕 الاستماع لردود الإدارة (إشعارات للعميل)
+        function listenForAdminReplies() {
+            if (db && chatSessionId) {
+                db.ref('chats/' + chatSessionId + '/messages').on('child_added', function(snap) {
+                    var msg = snap.val();
+                    if ((msg.isAdmin || msg.sender === 'admin') && document.getElementById('chatOverlay').style.display !== 'flex') {
+                        if ('Notification' in window && Notification.permission === 'granted') {
+                            new Notification('📩 Tènvora Group', {
+                                body: msg.text.substring(0, 100),
+                                icon: 'https://cdn-icons-png.flaticon.com/512/2099/2099199.png',
+                                tag: 'chat-reply'
+                            });
+                        }
+                        try { var audio = new Audio('https://www.soundjay.com/buttons/button-10.mp3'); audio.volume = 0.3; audio.play(); } catch(e) {}
+                    }
+                });
+            }
+        }
+
+        // ✅ دالة فتح الشات (نسخة واحدة صحيحة)
         function openChat() {
             document.getElementById('chatOverlay').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -682,6 +707,7 @@
             else { document.getElementById('phoneSection').style.display = 'none'; document.getElementById('chatInputArea').style.display = 'flex'; }
             loadChatMessages();
             setTimeout(function() { document.getElementById('chatInput')?.focus(); }, 400);
+            requestNotificationPermission();
         }
 
         function closeChat() { document.getElementById('chatOverlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
@@ -696,7 +722,6 @@
             } else {
                 div.innerHTML = '<div class="msg bot"><span class="tag">Tènvora</span>👋 مرحباً بك! الرجاء كتابة فكرة مبسطة عن الموقع الذي تريد إنشائه.</div>';
             }
-            // Firebase real-time
             if (db && chatSessionId) {
                 db.ref('chats/' + chatSessionId + '/messages').off('value');
                 db.ref('chats/' + chatSessionId + '/messages').on('value', function(snap) {
@@ -838,47 +863,13 @@
                 document.getElementById('themeCtrl').classList.remove('active');
         });
 
-        setTimeout(() => { trackVisit(); handleReferral(); }, 500);
+        // ============= بدء التشغيل =============
+        setTimeout(() => { 
+            trackVisit(); 
+            handleReferral(); 
+            listenForAdminReplies(); // تشغيل مستمع الإشعارات
+        }, 500);
         updateThemeImages(0);
-        // طلب إذن الإشعارات عند أول زيارة
-function requestNotificationPermission() {
-    if ('Notification' in window && Notification.permission === 'denied') {
-        alert('الرجاء تفعيل الإشعارات من إعدادات المتصفح ليصلك ردنا');
-    } else if ('Notification' in window && Notification.permission !== 'granted') {
-        Notification.requestPermission();
-    }
-}
-
-// استدعاء عند فتح الشات
-function openChat() {
-    // ... الكود الموجود ...
-    requestNotificationPermission();
-}
-
-// إضافة listener للإشعارات عند وصول رد من الإدارة
-function listenForAdminReplies() {
-    if (db && chatSessionId) {
-        db.ref('chats/' + chatSessionId + '/messages').on('child_added', function(snap) {
-            var msg = snap.val();
-            if ((msg.isAdmin || msg.sender === 'admin') && document.getElementById('chatOverlay').style.display !== 'flex') {
-                // إظهار إشعار للمستخدم
-                if ('Notification' in window && Notification.permission === 'granted') {
-                    new Notification('📩 Tènvora Group', {
-                        body: msg.text.substring(0, 100),
-                        icon: 'https://cdn-icons-png.flaticon.com/512/2099/2099199.png',
-                        tag: 'chat-reply'
-                    });
-                }
-                // صوت تنبيه
-                try { var audio = new Audio('https://www.soundjay.com/buttons/button-10.mp3'); audio.volume = 0.3; audio.play(); } catch(e) {}
-            }
-        });
-    }
-}
-
-// تشغيل المستمع
-setTimeout(function() { listenForAdminReplies(); }, 1000);
     </script>
-
 </body>
 </html>
