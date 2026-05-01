@@ -649,6 +649,17 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="35">
     </a>
 
+    <!-- ✅ PushAlert Unified Code -->
+    <script type="text/javascript">
+        (function(d, t) {
+            var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+            g.src = "https://cdn.pushalert.co/unified_a5cf8af33485db08fc570a7bec07ba43.js";
+            s.parentNode.insertBefore(g, s);
+        }(document, "script"));
+    </script>
+    <!-- End PushAlert Unified Code -->
+
     <script>
         // ============= FIREBASE =============
         const firebaseConfig = {
@@ -671,35 +682,6 @@
 
         if (!chatSessionId) { chatSessionId = 'chat_' + Date.now() + '_' + Math.random().toString(36).substr(2,9); localStorage.setItem('chatSessionId', chatSessionId); }
 
-        // 🆕 طلب إذن الإشعارات
-        function requestNotificationPermission() {
-            if ('Notification' in window && Notification.permission === 'denied') {
-                // تم الرفض سابقاً
-            } else if ('Notification' in window && Notification.permission !== 'granted') {
-                Notification.requestPermission();
-            }
-        }
-
-        // 🆕 الاستماع لردود الإدارة (إشعارات للعميل)
-        function listenForAdminReplies() {
-            if (db && chatSessionId) {
-                db.ref('chats/' + chatSessionId + '/messages').on('child_added', function(snap) {
-                    var msg = snap.val();
-                    if ((msg.isAdmin || msg.sender === 'admin') && document.getElementById('chatOverlay').style.display !== 'flex') {
-                        if ('Notification' in window && Notification.permission === 'granted') {
-                            new Notification('📩 Tènvora Group', {
-                                body: msg.text.substring(0, 100),
-                                icon: 'https://cdn-icons-png.flaticon.com/512/2099/2099199.png',
-                                tag: 'chat-reply'
-                            });
-                        }
-                        try { var audio = new Audio('https://www.soundjay.com/buttons/button-10.mp3'); audio.volume = 0.3; audio.play(); } catch(e) {}
-                    }
-                });
-            }
-        }
-
-        // ✅ دالة فتح الشات (نسخة واحدة صحيحة)
         function openChat() {
             document.getElementById('chatOverlay').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -707,7 +689,6 @@
             else { document.getElementById('phoneSection').style.display = 'none'; document.getElementById('chatInputArea').style.display = 'flex'; }
             loadChatMessages();
             setTimeout(function() { document.getElementById('chatInput')?.focus(); }, 400);
-            requestNotificationPermission();
         }
 
         function closeChat() { document.getElementById('chatOverlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
@@ -863,12 +844,7 @@
                 document.getElementById('themeCtrl').classList.remove('active');
         });
 
-        // ============= بدء التشغيل =============
-        setTimeout(() => { 
-            trackVisit(); 
-            handleReferral(); 
-            listenForAdminReplies(); // تشغيل مستمع الإشعارات
-        }, 500);
+        setTimeout(() => { trackVisit(); handleReferral(); }, 500);
         updateThemeImages(0);
     </script>
 </body>
